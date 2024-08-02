@@ -37,7 +37,7 @@ const Login = () => {
             />
             <label>Email</label>
           </div>
-          <div className="input-container">
+          <div className="input-container" style={{"margin-bottom": "4px"}}>
             <input
               type="password"
               required
@@ -46,14 +46,15 @@ const Login = () => {
             />
             <label>Password</label>
           </div>
+          <span  style={{"align-items":" flex-start","display": "flex","padding": "10px 0px"}}>
+            <Link to="/forgetpassword" style={{color:"#2575fc"}}>Forget password ?</Link>
+          </span>
           <button type="submit" className="login-button">Login</button>
           {error && <p className="error-message">{error}</p>}
-          <div className="forgot-password">
-            <Link to="/signup">create account?</Link>
+          <div className="forgot-password">You don't have an account ? 
+            <Link to="/signup">create account</Link>
           </div>
-          <div className="forgot-password">
-            <Link to="/forgetpassword">forget password ?</Link>
-          </div>
+
         </form>
       </div>
     </div>
