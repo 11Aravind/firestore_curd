@@ -6,6 +6,7 @@ import { auth } from './firebaseConfig';
 import Login from './Login';
 import Curd from './Curd';
 import Signup from './Signup';
+import Forgetpassword from './pages/Forgetpassword';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -28,6 +29,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/forgetpassword" element={<Forgetpassword />} />
         <Route path="/curd" element={user ? <Curd /> : <Navigate to="/login" />} />
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>

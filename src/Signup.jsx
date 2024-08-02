@@ -1,13 +1,11 @@
 import './Login.css'; // Import the CSS file for styling
 import { useState } from 'react';
 import { auth } from './firebaseConfig'; // Import the auth object from firebaseConfig
-
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { addDoc, collection, getFirestore, query, where, getDocs } from 'firebase/firestore';
+import { createUserWithEmailAndPassword, fetchSignInMethodsForEmail } from 'firebase/auth';
 
 const Signup = () => {
-    const db = getFirestore();
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -15,19 +13,28 @@ const Signup = () => {
 
     const handleSignup = async () => {
         try {
-            createUserWithEmailAndPassword(auth,email,password)
-            .then(res=>{
-                alert("user created successfuly")
-                navigate("/login");
-            })
-            .catch(err=>{ 
-                alert("insertion failed");
-                console.log(err)
-            })
-            }catch(err){
-                console.log(`hya huva ${err}`);
-            }
-    };
+          // Check if the user already exists
+          const signInMethods = await fetchSignInMethodsForEmail(auth, email);
+          if (signInMethods.length > 0) {
+            alert('User already exists');
+          } else {
+            // Create a new user if the email is not in use
+            await createUserWithEmailAndPassword(auth, email, password);
+            alert('User created successfully');
+            navigate('/login');
+          }
+        } catch (error) {
+          // Handle errors
+          if (error.code === 'auth/email-already-in-use') {
+            alert('The email address is already exist. please login');
+          } else if (error.code === 'auth/weak-password') {
+            alert('Password should be at least 6 characters.');
+          } else {
+            alert('An error occurred. Please try again.');
+            console.error('Error during signup:', error);
+          }
+        }
+      };
 
     return (
         <div className="login-container">
@@ -54,7 +61,7 @@ const Signup = () => {
                 <button type="submit" onClick={handleSignup} className="login-button">Signup</button>
                 {error && <p className="error-message">{error}</p>}
                 <div className="forgot-password">
-                    <a href="#">Forgot Password?</a>
+                    <Link to="/login">Already have and account?</Link>
                 </div>
             </div>
         </div>

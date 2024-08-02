@@ -9,15 +9,14 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-const navigate=useNavigate()
+  const navigate = useNavigate()
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const a=await signInWithEmailAndPassword(auth, email, password);
+      const a = await signInWithEmailAndPassword(auth, email, password);
       console.log(a);
       alert("logined")
       navigate("/curd")
-      // Redirect or perform further actions upon successful login
     } catch (err) {
       console.error('Login failed:', err);
       setError('Failed to log in. Please check your credentials.');
@@ -49,12 +48,12 @@ const navigate=useNavigate()
           </div>
           <button type="submit" className="login-button">Login</button>
           {error && <p className="error-message">{error}</p>}
-          <div className="remember-me">
-            <input type="checkbox" id="remember" />
-            <label htmlFor="remember">Remember Me</label>
+          <div className="forgot-password">
+            <Link to="/signup">create account?</Link>
           </div>
           <div className="forgot-password">
-<Link to="/signup">create account?</Link>          </div>
+            <Link to="/forgetpassword">forget password ?</Link>
+          </div>
         </form>
       </div>
     </div>

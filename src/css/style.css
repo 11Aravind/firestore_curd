@@ -1,0 +1,17 @@
+.formContainer{
+    display: flex;
+    flex-direction: column;
+
+}
+.inputBox{
+    display: flex;
+    flex-direction: column;
+}
+.formElement{
+    outline: none;
+    border-radius: 7px;
+    height: 33px;
+    padding: 3px 4px;
+    border: 1px solid;
+
+}
